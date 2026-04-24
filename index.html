@@ -1,0 +1,1204 @@
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindNova - Explore Psychology & Mindset</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: {
+                            900: '#0B0F19',
+                            800: '#151B2B',
+                            700: '#1E293B',
+                        },
+                        brand: {
+                            blue: '#3B82F6',
+                            red: '#EF4444',
+                            glow: 'rgba(239, 68, 68, 0.5)',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'slide-up': 'slideUp 0.5s ease-out forwards',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        glow: {
+                            '0%': { boxShadow: '0 0 5px rgba(239, 68, 68, 0.2)' },
+                            '100%': { boxShadow: '0 0 20px rgba(239, 68, 68, 0.6), 0 0 40px rgba(239, 68, 68, 0.3)' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0B0F19;
+            color: #F8FAFC;
+        }
+        
+        .glass {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .glass-card {
+            background: linear-gradient(145deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+        
+        .nav-active {
+            background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+            box-shadow: 0 4px 20px rgba(239, 68, 68, 0.4), 0 0 0 1px rgba(239, 68, 68, 0.2);
+            color: white !important;
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+        
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2), 0 0 0 1px rgba(59, 130, 246, 0.3);
+        }
+        
+        .youtube-card {
+            transition: all 0.3s ease;
+        }
+        
+        .youtube-card:hover {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+        
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #3B82F6 0%, #EF4444 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .admin-input {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            transition: all 0.3s;
+        }
+        
+        .admin-input:focus {
+            border-color: #EF4444;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass border-b border-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30">
+                        <i data-lucide="brain" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <span class="text-2xl font-bold bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
+                        MindNova
+                    </span>
+                </div>
+
+                <div class="hidden md:flex items-center gap-2">
+                    <a href="#/home" onclick="navigateTo('home'); return false;" 
+                       class="nav-link px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/50 transition-all duration-300 flex items-center gap-2 font-medium">
+                        <i data-lucide="home" class="w-4 h-4"></i>
+                        Home
+                    </a>
+                    <a href="#/all-posts" onclick="navigateTo('all-posts'); return false;" 
+                       class="nav-link px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/50 transition-all duration-300 flex items-center gap-2 font-medium">
+                        <i data-lucide="library" class="w-4 h-4"></i>
+                        All Posts
+                    </a>
+                    <a href="#/new-posts" onclick="navigateTo('new-posts'); return false;" 
+                       class="nav-link px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/50 transition-all duration-300 flex items-center gap-2 font-medium">
+                        <i data-lucide="sparkles" class="w-4 h-4"></i>
+                        New Posts
+                    </a>
+                    <a href="#/ebook" onclick="navigateTo('ebook'); return false;" 
+                       class="nav-link px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/50 transition-all duration-300 flex items-center gap-2 font-medium">
+                        <i data-lucide="book-open" class="w-4 h-4"></i>
+                        Psychology Ebook
+                    </a>
+                    <a href="#/about" onclick="navigateTo('about'); return false;" 
+                       class="nav-link px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/50 transition-all duration-300 flex items-center gap-2 font-medium">
+                        <i data-lucide="info" class="w-4 h-4"></i>
+                        About
+                    </a>
+                    <a href="#/contact" onclick="navigateTo('contact'); return false;" 
+                       class="nav-link px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/50 transition-all duration-300 flex items-center gap-2 font-medium">
+                        <i data-lucide="mail" class="w-4 h-4"></i>
+                        Contact
+                    </a>
+                    <a href="#/admin" onclick="navigateTo('admin'); return false;" 
+                       class="nav-link px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/50 transition-all duration-300 flex items-center gap-2 font-medium">
+                        <i data-lucide="shield" class="w-4 h-4"></i>
+                        Admin
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg text-slate-300 hover:bg-slate-800/50">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+
+                <!-- Search Bar (Desktop) -->
+                <div class="hidden md:flex items-center bg-slate-800/50 rounded-full px-4 py-2 border border-slate-700/50 focus-within:border-blue-500/50 transition-colors">
+                    <i data-lucide="search" class="w-4 h-4 text-slate-400"></i>
+                    <input type="text" placeholder="Search articles..." class="bg-transparent border-none outline-none text-sm text-white ml-2 w-48 placeholder-slate-500">
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900/95 border-t border-slate-800">
+            <div class="px-4 pt-2 pb-6 space-y-1">
+                <a href="#/home" onclick="navigateTo('home'); toggleMobileMenu(); return false;" 
+                   class="block px-4 py-3 rounded-lg text-slate-300 hover:bg-red-600/10 hover:text-red-400 transition-all flex items-center gap-3">
+                    <i data-lucide="home" class="w-5 h-5"></i> Home
+                </a>
+                <a href="#/all-posts" onclick="navigateTo('all-posts'); toggleMobileMenu(); return false;" 
+                   class="block px-4 py-3 rounded-lg text-slate-300 hover:bg-red-600/10 hover:text-red-400 transition-all flex items-center gap-3">
+                    <i data-lucide="library" class="w-5 h-5"></i> All Posts
+                </a>
+                <a href="#/new-posts" onclick="navigateTo('new-posts'); toggleMobileMenu(); return false;" 
+                   class="block px-4 py-3 rounded-lg text-slate-300 hover:bg-red-600/10 hover:text-red-400 transition-all flex items-center gap-3">
+                    <i data-lucide="sparkles" class="w-5 h-5"></i> New Posts
+                </a>
+                <a href="#/ebook" onclick="navigateTo('ebook'); toggleMobileMenu(); return false;" 
+                   class="block px-4 py-3 rounded-lg text-slate-300 hover:bg-red-600/10 hover:text-red-400 transition-all flex items-center gap-3">
+                    <i data-lucide="book-open" class="w-5 h-5"></i> Psychology Ebook
+                </a>
+                <a href="#/about" onclick="navigateTo('about'); toggleMobileMenu(); return false;" 
+                   class="block px-4 py-3 rounded-lg text-slate-300 hover:bg-red-600/10 hover:text-red-400 transition-all flex items-center gap-3">
+                    <i data-lucide="info" class="w-5 h-5"></i> About
+                </a>
+                <a href="#/contact" onclick="navigateTo('contact'); toggleMobileMenu(); return false;" 
+                   class="block px-4 py-3 rounded-lg text-slate-300 hover:bg-red-600/10 hover:text-red-400 transition-all flex items-center gap-3">
+                    <i data-lucide="mail" class="w-5 h-5"></i> Contact
+                </a>
+                <a href="#/admin" onclick="navigateTo('admin'); toggleMobileMenu(); return false;" 
+                   class="block px-4 py-3 rounded-lg text-slate-300 hover:bg-red-600/10 hover:text-red-400 transition-all flex items-center gap-3">
+                    <i data-lucide="shield" class="w-5 h-5"></i> Admin Panel
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-20 min-h-screen">
+        
+        <!-- Home Page -->
+        <section id="home" class="page active">
+            <!-- Hero Section -->
+            <div class="relative overflow-hidden bg-gradient-to-b from-slate-900 via-blue-950/20 to-slate-900 pb-20">
+                <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%234F46E5%22%20fill-opacity%3D%220.05%22%3E%3Cpath%20d%3D%22M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+                
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
+                    <div class="grid lg:grid-cols-2 gap-12 items-center">
+                        <div class="space-y-8 animate-slide-up">
+                            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium">
+                                <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
+                                Welcome to MindNova
+                            </div>
+                            <h1 class="text-5xl md:text-7xl font-bold leading-tight">
+                                Master Your <br>
+                                <span class="gradient-text glow-text">Mindset</span> & <br>
+                                <span class="text-white">Psychology</span>
+                            </h1>
+                            <p class="text-lg text-slate-400 max-w-lg leading-relaxed">
+                                Discover evidence-based insights, cognitive techniques, and transformative strategies to elevate your mental clarity and emotional intelligence.
+                            </p>
+                            <div class="flex flex-wrap gap-4">
+                                <button onclick="navigateTo('all-posts')" class="px-8 py-4 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white rounded-xl font-semibold shadow-lg shadow-red-500/30 transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
+                                    Explore Content
+                                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                                </button>
+                                <button onclick="navigateTo('ebook')" class="px-8 py-4 glass text-white rounded-xl font-semibold hover:bg-slate-800/80 transition-all duration-300 flex items-center gap-2 border border-slate-700">
+                                    <i data-lucide="book" class="w-5 h-5 text-blue-400"></i>
+                                    Read Ebook
+                                </button>
+                            </div>
+                            <div class="flex items-center gap-6 pt-4 text-sm text-slate-500">
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="users" class="w-4 h-4"></i>
+                                    <span>50K+ Readers</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="file-text" class="w-4 h-4"></i>
+                                    <span>200+ Articles</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="globe" class="w-4 h-4"></i>
+                                    <span>Global Community</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="relative lg:h-[600px] flex items-center justify-center">
+                            <div class="absolute w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
+                            <div class="absolute w-96 h-96 bg-red-500/20 rounded-full blur-3xl animate-pulse delay-1000 translate-x-20"></div>
+                            <div class="relative z-10 grid grid-cols-2 gap-4 transform rotate-3 hover:rotate-0 transition-transform duration-700">
+                                <div class="space-y-4 mt-8">
+                                    <div class="glass-card rounded-2xl p-4 animate-float w-48">
+                                        <div class="h-32 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl mb-3 flex items-center justify-center">
+                                            <i data-lucide="brain" class="w-12 h-12 text-white/80"></i>
+                                        </div>
+                                        <h3 class="font-semibold text-white text-sm">Cognitive Biases</h3>
+                                        <p class="text-xs text-slate-400 mt-1">Understanding your mind</p>
+                                    </div>
+                                    <div class="glass-card rounded-2xl p-4 animate-float delay-200 w-48">
+                                        <div class="h-32 bg-gradient-to-br from-purple-400 to-purple-600 rounded-xl mb-3 flex items-center justify-center">
+                                            <i data-lucide="trending-up" class="w-12 h-12 text-white/80"></i>
+                                        </div>
+                                        <h3 class="font-semibold text-white text-sm">Growth Mindset</h3>
+                                        <p class="text-xs text-slate-400 mt-1">Continuous improvement</p>
+                                    </div>
+                                </div>
+                                <div class="space-y-4">
+                                    <div class="glass-card rounded-2xl p-4 animate-float delay-300 w-48">
+                                        <div class="h-32 bg-gradient-to-br from-red-400 to-red-600 rounded-xl mb-3 flex items-center justify-center">
+                                            <i data-lucide="heart" class="w-12 h-12 text-white/80"></i>
+                                        </div>
+                                        <h3 class="font-semibold text-white text-sm">Emotional IQ</h3>
+                                        <p class="text-xs text-slate-400 mt-1">Master your emotions</p>
+                                    </div>
+                                    <div class="glass-card rounded-2xl p-4 animate-float delay-150 w-48">
+                                        <div class="h-32 bg-gradient-to-br from-amber-400 to-orange-600 rounded-xl mb-3 flex items-center justify-center">
+                                            <i data-lucide="sun" class="w-12 h-12 text-white/80"></i>
+                                        </div>
+                                        <h3 class="font-semibold text-white text-sm">Positive Psychology</h3>
+                                        <p class="text-xs text-slate-400 mt-1">Science of happiness</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Sections -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+                <!-- All Content Section -->
+                <div class="mb-20">
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h2 class="text-3xl font-bold text-white mb-2">All Content</h2>
+                            <p class="text-slate-400">Explore our comprehensive library of psychological insights</p>
+                        </div>
+                        <button onclick="navigateTo('all-posts')" class="text-red-400 hover:text-red-300 flex items-center gap-2 font-medium transition-colors">
+                            View All <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6" id="home-all-content">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- New Posts Section -->
+                <div class="mb-20">
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h2 class="text-3xl font-bold text-white mb-2">New Posts</h2>
+                            <p class="text-slate-400">Latest articles and insights</p>
+                        </div>
+                    </div>
+                    <div class="grid md:grid-cols-3 gap-6" id="home-new-posts">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Psychology Ebook Section -->
+                <div class="glass-card rounded-3xl p-8 md:p-12 border border-slate-700/50 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-red-500/10 rounded-full blur-3xl"></div>
+                    <div class="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
+                    <div class="grid md:grid-cols-2 gap-12 items-center relative z-10">
+                        <div class="space-y-6">
+                            <div class="inline-block px-4 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-medium">
+                                Premium Resource
+                            </div>
+                            <h2 class="text-4xl md:text-5xl font-bold text-white leading-tight">
+                                Psychology Made <br>
+                                <span class="gradient-text">Simple & Accessible</span>
+                            </h2>
+                            <p class="text-slate-400 text-lg leading-relaxed">
+                                A comprehensive guide to understanding human behavior, cognitive patterns, and mental wellness strategies. Designed for both beginners and psychology enthusiasts.
+                            </p>
+                            <ul class="space-y-3 text-slate-300">
+                                <li class="flex items-center gap-3">
+                                    <i data-lucide="check-circle" class="w-5 h-5 text-green-400"></i>
+                                    <span>12 Chapters of Deep Insights</span>
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i data-lucide="check-circle" class="w-5 h-5 text-green-400"></i>
+                                    <span>Practical Exercises & Worksheets</span>
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <i data-lucide="check-circle" class="w-5 h-5 text-green-400"></i>
+                                    <span>Scientifically Backed Strategies</span>
+                                </li>
+                            </ul>
+                            <button onclick="navigateTo('ebook')" class="mt-4 px-8 py-4 bg-white text-slate-900 rounded-xl font-semibold hover:bg-slate-200 transition-colors flex items-center gap-2">
+                                Get the Ebook
+                                <i data-lucide="download" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                        <div class="relative">
+                            <div class="aspect-[3/4] rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-500 overflow-hidden group">
+                                <div class="absolute inset-0 bg-gradient-to-br from-red-500/20 to-blue-500/20"></div>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
+                                    <div class="w-24 h-24 bg-gradient-to-br from-red-500 to-blue-500 rounded-3xl flex items-center justify-center mb-6 shadow-2xl">
+                                        <i data-lucide="brain" class="w-12 h-12 text-white"></i>
+                                    </div>
+                                    <h3 class="text-3xl font-bold text-white mb-2">MindNova</h3>
+                                    <p class="text-slate-400 text-sm">The Complete Guide</p>
+                                    <div class="mt-8 w-full h-1 bg-slate-700 rounded-full overflow-hidden">
+                                        <div class="h-full w-2/3 bg-gradient-to-r from-red-500 to-blue-500"></div>
+                                    </div>
+                                    <p class="text-xs text-slate-500 mt-2">45 pages • Premium Edition</p>
+                                </div>
+                                <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-slate-900 to-transparent">
+                                    <div class="flex items-center gap-2 text-sm text-slate-300">
+                                        <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+                                        <span>4.9/5 Rating</span>
+                                        <span class="mx-2">•</span>
+                                        <span>10,000+ Downloads</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- All Posts Page -->
+        <section id="all-posts" class="page">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="text-center mb-16">
+                    <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">All Posts</h1>
+                    <p class="text-slate-400 text-lg max-w-2xl mx-auto">Explore our complete collection of psychological insights, research summaries, and practical guides.</p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8" id="all-posts-grid">
+                    <!-- Populated by JS -->
+                </div>
+                
+                <div class="mt-16 text-center">
+                    <button class="px-8 py-3 border border-slate-700 text-slate-300 rounded-xl hover:bg-slate-800/50 transition-all duration-300 font-medium">
+                        Load More Posts
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Posts Page -->
+        <section id="new-posts" class="page">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="glass-card rounded-3xl p-8 md:p-16 border border-slate-700/50 mb-12">
+                    <div class="max-w-3xl">
+                        <h1 class="text-4xl md:text-5xl font-bold text-white mb-6">New Posts</h1>
+                        <p class="text-slate-400 text-lg leading-relaxed mb-8">
+                            Stay updated with our latest discoveries, trending topics, and fresh perspectives on psychology and mental wellness. Our newest content is designed to provide immediate value and actionable insights.
+                        </p>
+                        <div class="flex flex-wrap gap-4">
+                            <div class="px-6 py-3 bg-red-500/10 border border-red-500/20 rounded-xl">
+                                <div class="text-2xl font-bold text-red-400">Weekly</div>
+                                <div class="text-sm text-slate-400">Updates</div>
+                            </div>
+                            <div class="px-6 py-3 bg-blue-500/10 border border-blue-500/20 rounded-xl">
+                                <div class="text-2xl font-bold text-blue-400">Research</div>
+                                <div class="text-sm text-slate-400">Based</div>
+                            </div>
+                            <div class="px-6 py-3 bg-purple-500/10 border border-purple-500/20 rounded-xl">
+                                <div class="text-2xl font-bold text-purple-400">Action</div>
+                                <div class="text-sm text-slate-400">Oriented</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-8" id="new-posts-full-grid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Psychology Ebook Page -->
+        <section id="ebook" class="page">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="grid lg:grid-cols-2 gap-16 items-center">
+                    <div>
+                        <div class="inline-block px-4 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium mb-6">
+                            Digital Resource
+                        </div>
+                        <h1 class="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+                            Psychology <br>
+                            <span class="gradient-text">Ebook</span>
+                        </h1>
+                        <p class="text-slate-400 text-lg leading-relaxed mb-8">
+                            Dive deep into the science of human behavior with our comprehensive 45-page guide. From cognitive psychology to practical mindfulness techniques, this ebook covers everything you need to understand and optimize your mental processes.
+                        </p>
+                        
+                        <div class="space-y-6 mb-8">
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="check" class="w-5 h-5 text-red-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-semibold mb-1">Understanding Cognitive Patterns</h4>
+                                    <p class="text-slate-400 text-sm">Learn how your brain processes information and makes decisions</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="check" class="w-5 h-5 text-red-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-semibold mb-1">Emotional Regulation Techniques</h4>
+                                    <p class="text-slate-400 text-sm">Practical strategies for managing stress and anxiety</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="check" class="w-5 h-5 text-red-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-semibold mb-1">Building Resilience</h4>
+                                    <p class="text-slate-400 text-sm">Develop mental toughness and adaptive coping mechanisms</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-4">
+                            <button class="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-xl font-semibold shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-all duration-300">
+                                Download Now
+                            </button>
+                            <button class="px-8 py-4 glass text-white rounded-xl font-semibold hover:bg-slate-800/80 transition-all duration-300 border border-slate-700">
+                                Preview Contents
+                            </button>
+                        </div>
+                        
+                        <div class="mt-8 flex items-center gap-6 text-sm text-slate-500">
+                            <span class="flex items-center gap-2">
+                                <i data-lucide="download" class="w-4 h-4"></i> 12.5k Downloads
+                            </span>
+                            <span class="flex items-center gap-2">
+                                <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i> 4.9/5 Rating
+                            </span>
+                            <span class="flex items-center gap-2">
+                                <i data-lucide="file-text" class="w-4 h-4"></i> PDF Format
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-red-500/20 rounded-full blur-3xl"></div>
+                        <div class="relative transform hover:scale-105 transition-transform duration-500">
+                            <div class="aspect-[3/4] rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 shadow-2xl overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-transparent to-red-600/20"></div>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center p-12 text-center">
+                                    <div class="w-32 h-32 bg-gradient-to-br from-red-500 to-blue-500 rounded-3xl flex items-center justify-center mb-8 shadow-2xl transform -rotate-12">
+                                        <i data-lucide="book-open" class="w-16 h-16 text-white"></i>
+                                    </div>
+                                    <h2 class="text-5xl font-bold text-white mb-4">MindNova</h2>
+                                    <p class="text-xl text-slate-400 mb-2">The Psychology Guide</p>
+                                    <div class="w-20 h-1 bg-gradient-to-r from-red-500 to-blue-500 rounded-full mb-8"></div>
+                                    <p class="text-slate-500 text-sm">Complete Edition 2024</p>
+                                </div>
+                                <div class="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-slate-900 via-slate-900/90 to-transparent">
+                                    <div class="grid grid-cols-3 gap-4 text-center">
+                                        <div>
+                                            <div class="text-2xl font-bold text-white">45</div>
+                                            <div class="text-xs text-slate-500">Pages</div>
+                                        </div>
+                                        <div>
+                                            <div class="text-2xl font-bold text-white">12</div>
+                                            <div class="text-xs text-slate-500">Chapters</div>
+                                        </div>
+                                        <div>
+                                            <div class="text-2xl font-bold text-white">8</div>
+                                            <div class="text-xs text-slate-500">Exercises</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contents Preview -->
+                <div class="mt-24">
+                    <h3 class="text-2xl font-bold text-white mb-8 text-center">What's Inside</h3>
+                    <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                        <div class="glass-card rounded-2xl p-6 border border-slate-700/50 flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center text-red-400 font-bold">01</div>
+                            <div>
+                                <h4 class="text-white font-semibold">Introduction to Psychology</h4>
+                                <p class="text-slate-400 text-sm">History and fundamentals</p>
+                            </div>
+                        </div>
+                        <div class="glass-card rounded-2xl p-6 border border-slate-700/50 flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center text-red-400 font-bold">02</div>
+                            <div>
+                                <h4 class="text-white font-semibold">Cognitive Processes</h4>
+                                <p class="text-slate-400 text-sm">Thinking and decision making</p>
+                            </div>
+                        </div>
+                        <div class="glass-card rounded-2xl p-6 border border-slate-700/50 flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center text-red-400 font-bold">03</div>
+                            <div>
+                                <h4 class="text-white font-semibold">Emotional Intelligence</h4>
+                                <p class="text-slate-400 text-sm">Understanding feelings</p>
+                            </div>
+                        </div>
+                        <div class="glass-card rounded-2xl p-6 border border-slate-700/50 flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center text-red-400 font-bold">04</div>
+                            <div>
+                                <h4 class="text-white font-semibold">Behavioral Patterns</h4>
+                                <p class="text-slate-400 text-sm">Habits and routines</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Page -->
+        <section id="about" class="page">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="grid lg:grid-cols-2 gap-16 items-center mb-20">
+                    <div>
+                        <h1 class="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+                            About <br>
+                            <span class="gradient-text">MindNova</span>
+                        </h1>
+                        <p class="text-slate-400 text-lg leading-relaxed mb-6">
+                            MindNova is a premier platform dedicated to making psychological insights accessible, practical, and transformative. Founded with a vision to bridge the gap between academic psychology and everyday life.
+                        </p>
+                        <p class="text-slate-400 text-lg leading-relaxed mb-8">
+                            We believe that understanding your mind is the first step toward personal growth. Our content combines rigorous scientific research with actionable strategies.
+                        </p>
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="glass-card rounded-2xl p-6 border border-slate-700/50">
+                                <div class="text-3xl font-bold text-red-400 mb-1">50K+</div>
+                                <div class="text-slate-400 text-sm">Active Learners</div>
+                            </div>
+                            <div class="glass-card rounded-2xl p-6 border border-slate-700/50">
+                                <div class="text-3xl font-bold text-blue-400 mb-1">200+</div>
+                                <div class="text-slate-400 text-sm">Published Articles</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <div class="aspect-square rounded-3xl bg-gradient-to-br from-blue-500/20 to-red-500/20 border border-slate-700/50 flex items-center justify-center overflow-hidden">
+                            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%234F46E5%22%20fill-opacity%3D%220.1%22%3E%3Cpath%20d%3D%22M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-30"></div>
+                            <div class="text-center z-10 p-12">
+                                <div class="w-24 h-24 bg-gradient-to-br from-red-500 to-blue-500 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl">
+                                    <i data-lucide="brain" class="w-12 h-12 text-white"></i>
+                                </div>
+                                <h3 class="text-3xl font-bold text-white mb-2">Global Impact</h3>
+                                <p class="text-slate-400">Reaching minds across continents with evidence-based psychology</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Team Section -->
+                <div class="mb-20">
+                    <h2 class="text-3xl font-bold text-white mb-12 text-center">Our Expert Team</h2>
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="glass-card rounded-2xl p-6 border border-slate-700/50 card-hover">
+                            <div class="w-20 h-20 bg-gradient-to-br from-red-400 to-red-600 rounded-2xl mx-auto mb-4 flex items-center justify-center text-2xl font-bold text-white">
+                                DR
+                            </div>
+                            <h3 class="text-xl font-bold text-white text-center mb-1">Dr. Rajesh Kumar</h3>
+                            <p class="text-red-400 text-center text-sm mb-4">Clinical Psychologist</p>
+                            <p class="text-slate-400 text-center text-sm">15+ years experience in cognitive behavioral therapy and mindfulness practices.</p>
+                        </div>
+                        <div class="glass-card rounded-2xl p-6 border border-slate-700/50 card-hover">
+                            <div class="w-20 h-20 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl mx-auto mb-4 flex items-center justify-center text-2xl font-bold text-white">
+                                PS
+                            </div>
+                            <h3 class="text-xl font-bold text-white text-center mb-1">Dr. Priya Sharma</h3>
+                            <p class="text-blue-400 text-center text-sm mb-4">Behavioral Scientist</p>
+                            <p class="text-slate-400 text-center text-sm">Specializing in behavioral psychology and habit formation research.</p>
+                        </div>
+                        <div class="glass-card rounded-2xl p-6 border border-slate-700/50 card-hover">
+                            <div class="w-20 h-20 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl mx-auto mb-4 flex items-center justify-center text-2xl font-bold text-white">
+                                AM
+                            </div>
+                            <h3 class="text-xl font-bold text-white text-center mb-1">Dr. Arjun Mehta</h3>
+                            <p class="text-purple-400 text-center text-sm mb-4">Neuroscientist</p>
+                            <p class="text-slate-400 text-center text-sm">Expert in neuroplasticity and brain-based learning techniques.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Page -->
+        <section id="contact" class="page">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="max-w-3xl mx-auto text-center mb-16">
+                    <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Get in Touch</h1>
+                    <p class="text-slate-400 text-lg">Have questions or suggestions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+                </div>
+                
+                <div class="grid lg:grid-cols-3 gap-8 mb-16">
+                    <div class="glass-card rounded-2xl p-8 border border-slate-700/50 text-center card-hover">
+                        <div class="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                            <i data-lucide="mail" class="w-8 h-8 text-red-400"></i>
+                        </div>
+                        <h3 class="text-white font-semibold text-lg mb-2">Email Us</h3>
+                        <p class="text-slate-400 text-sm mb-4">For general inquiries</p>
+                        <a href="mailto:hello@mindnova.com" class="text-blue-400 hover:text-blue-300 font-medium">hello@mindnova.com</a>
+                    </div>
+                    <div class="glass-card rounded-2xl p-8 border border-slate-700/50 text-center card-hover">
+                        <div class="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                            <i data-lucide="map-pin" class="w-8 h-8 text-blue-400"></i>
+                        </div>
+                        <h3 class="text-white font-semibold text-lg mb-2">Visit Us</h3>
+                        <p class="text-slate-400 text-sm mb-4">Headquarters</p>
+                        <span class="text-blue-400 font-medium">Mumbai, India</span>
+                    </div>
+                    <div class="glass-card rounded-2xl p-8 border border-slate-700/50 text-center card-hover">
+                        <div class="w-16 h-16 bg-purple-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                            <i data-lucide="phone" class="w-8 h-8 text-purple-400"></i>
+                        </div>
+                        <h3 class="text-white font-semibold text-lg mb-2">Call Us</h3>
+                        <p class="text-slate-400 text-sm mb-4">Mon-Fri, 9am-6pm IST</p>
+                        <span class="text-blue-400 font-medium">+91 98765 43210</span>
+                    </div>
+                </div>
+                
+                <div class="glass-card rounded-3xl p-8 md:p-12 border border-slate-700/50 max-w-4xl mx-auto">
+                    <form class="space-y-6" onsubmit="handleContactSubmit(event)">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-300 mb-2">First Name</label>
+                                <input type="text" class="admin-input w-full px-4 py-3 rounded-xl text-white outline-none" placeholder="John" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-300 mb-2">Last Name</label>
+                                <input type="text" class="admin-input w-full px-4 py-3 rounded-xl text-white outline-none" placeholder="Doe" required>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-300 mb-2">Email</label>
+                            <input type="email" class="admin-input w-full px-4 py-3 rounded-xl text-white outline-none" placeholder="john@example.com" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-300 mb-2">Subject</label>
+                            <select class="admin-input w-full px-4 py-3 rounded-xl text-white outline-none bg-slate-900">
+                                <option>General Inquiry</option>
+                                <option>Collaboration</option>
+                                <option>Content Suggestion</option>
+                                <option>Technical Support</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-300 mb-2">Message</label>
+                            <textarea rows="5" class="admin-input w-full px-4 py-3 rounded-xl text-white outline-none resize-none" placeholder="Your message here..." required></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-4 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white rounded-xl font-semibold shadow-lg shadow-red-500/30 transition-all duration-300">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Admin Page -->
+        <section id="admin" class="page">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="flex items-center justify-between mb-12">
+                    <div>
+                        <h1 class="text-4xl font-bold text-white mb-2">Admin Panel</h1>
+                        <p class="text-slate-400">Manage posts and content</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span class="px-4 py-2 bg-green-500/10 border border-green-500/20 text-green-400 rounded-lg text-sm font-medium flex items-center gap-2">
+                            <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                            System Active
+                        </span>
+                    </div>
+                </div>
+                
+                <!-- Add Post Form -->
+                <div class="glass-card rounded-2xl p-8 border border-slate-700/50 mb-12">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <i data-lucide="plus-circle" class="w-6 h-6 text-red-400"></i>
+                        Add New Post
+                    </h2>
+                    <form id="add-post-form" class="grid md:grid-cols-2 gap-6" onsubmit="handleAddPost(event)">
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-slate-300 mb-2">Title</label>
+                            <input type="text" id="post-title" class="admin-input w-full px-4 py-3 rounded-xl text-white outline-none" placeholder="Enter post title..." required>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-slate-300 mb-2">Image URL</label>
+                            <input type="url" id="post-image" class="admin-input w-full px-4 py-3 rounded-xl text-white outline-none" placeholder="https://example.com/image.jpg" required>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-slate-300 mb-2">Description</label>
+                            <textarea id="post-desc" rows="3" class="admin-input w-full px-4 py-3 rounded-xl text-white outline-none resize-none" placeholder="Enter post description..." required></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-300 mb-2">Category</label>
+                            <select id="post-category" class="admin-input w-full px-4 py-3 rounded-xl text-white outline-none bg-slate-900">
+                                <option>Psychology</option>
+                                <option>Mindfulness</option>
+                                <option>Behavior</option>
+                                <option>Cognitive</option>
+                                <option>Wellness</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-300 mb-2">Views (Optional)</label>
+                            <input type="number" id="post-views" class="admin-input w-full px-4 py-3 rounded-xl text-white outline-none" placeholder="0">
+                        </div>
+                        <div class="md:col-span-2">
+                            <button type="submit" class="px-8 py-4 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white rounded-xl font-semibold shadow-lg shadow-red-500/30 transition-all duration-300 flex items-center gap-2">
+                                <i data-lucide="save" class="w-5 h-5"></i>
+                                Publish Post
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Manage Posts -->
+                <div class="mb-8">
+                    <h2 class="text-2xl font-bold text-white mb-6">Manage Posts</h2>
+                    <div class="grid md:grid-cols-3 gap-6" id="admin-posts-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800/50 pt-20 pb-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-12 mb-16">
+                <div class="col-span-2">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-red-500 rounded-xl flex items-center justify-center">
+                            <i data-lucide="brain" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <span class="text-2xl font-bold text-white">MindNova</span>
+                    </div>
+                    <p class="text-slate-400 leading-relaxed mb-6 max-w-md">
+                        Empowering minds through evidence-based psychological insights. Join our global community dedicated to mental wellness and personal growth.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-red-500/50 transition-all duration-300">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-red-500/50 transition-all duration-300">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-red-500/50 transition-all duration-300">
+                            <i data-lucide="youtube" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-red-500/50 transition-all duration-300">
+                            <i data-lucide="linkedin" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-6">Quick Links</h4>
+                    <ul class="space-y-4">
+                        <li><a href="#/all-posts" onclick="navigateTo('all-posts'); return false;" class="text-slate-400 hover:text-red-400 transition-colors">All Posts</a></li>
+                        <li><a href="#/new-posts" onclick="navigateTo('new-posts'); return false;" class="text-slate-400 hover:text-red-400 transition-colors">New Posts</a></li>
+                        <li><a href="#/ebook" onclick="navigateTo('ebook'); return false;" class="text-slate-400 hover:text-red-400 transition-colors">Psychology Ebook</a></li>
+                        <li><a href="#/about" onclick="navigateTo('about'); return false;" class="text-slate-400 hover:text-red-400 transition-colors">About Us</a></li>
+                        <li><a href="#/contact" onclick="navigateTo('contact'); return false;" class="text-slate-400 hover:text-red-400 transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-6">Resources</h4>
+                    <ul class="space-y-4">
+                        <li><a href="#" class="text-slate-400 hover:text-red-400 transition-colors flex items-center gap-2">Cognitive Biases <i data-lucide="external-link" class="w-4 h-4"></i></a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-red-400 transition-colors flex items-center gap-2">Mental Health Directory <i data-lucide="external-link" class="w-4 h-4"></i></a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-red-400 transition-colors flex items-center gap-2">Research Papers <i data-lucide="external-link" class="w-4 h-4"></i></a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-red-400 transition-colors flex items-center gap-2">Newsletter <i data-lucide="external-link" class="w-4 h-4"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800/50 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-slate-500 text-sm">© 2024 MindNova. All rights reserved.</p>
+                <div class="flex gap-6 text-sm text-slate-500">
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                    <a href="#" class="hover:text-white transition-colors">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Initial Posts Data
+        let posts = [
+            {
+                id: 1,
+                title: "Understanding Cognitive Biases",
+                image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&auto=format&fit=crop",
+                description: "Explore the mental shortcuts that affect our decision-making processes and learn how to overcome them.",
+                category: "Psychology",
+                views: 12500,
+                date: "2024-01-15"
+            },
+            {
+                id: 2,
+                title: "The Science of Habit Formation",
+                image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&auto=format&fit=crop",
+                description: "Discover research-backed strategies to build positive habits and break negative ones permanently.",
+                category: "Behavior",
+                views: 8900,
+                date: "2024-01-20"
+            },
+            {
+                id: 3,
+                title: "Emotional Intelligence at Work",
+                image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop",
+                description: "How developing emotional intelligence can transform your professional relationships and career.",
+                category: "Workplace",
+                views: 7200,
+                date: "2024-01-25"
+            },
+            {
+                id: 4,
+                title: "Mindfulness Meditation Guide",
+                image: "https://images.unsplash.com/photo-1508672019048-805c876b67e2?w=800&auto=format&fit=crop",
+                description: "A beginner's guide to mindfulness meditation and its benefits for mental health and cognitive function.",
+                category: "Mindfulness",
+                views: 9500,
+                date: "2024-02-01"
+            },
+            {
+                id: 5,
+                title: "The Psychology of Stress",
+                image: "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=800&auto=format&fit=crop",
+                description: "Understanding the physiological and psychological effects of stress and effective coping mechanisms.",
+                category: "Health",
+                views: 6800,
+                date: "2024-02-05"
+            },
+            {
+                id: 6,
+                title: "Sleep and Mental Health",
+                image: "https://images.unsplash.com/photo-1541781777621-af13460bb3ce?w=800&auto=format&fit=crop",
+                description: " exploring the critical connection between quality sleep and psychological wellbeing.",
+                category: "Wellness",
+                views: 8100,
+                date: "2024-02-10"
+            }
+        ];
+
+        // Navigation functionality
+        function navigateTo(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show target page
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                window.scrollTo(0, 0);
+            }
+            
+            // Update active nav link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('nav-active');
+            });
+            
+            // Close mobile menu if open
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+            }
+            
+            // Update URL hash
+            window.location.hash = pageId;
+            
+            // Refresh icon rendering
+            setTimeout(() => lucide.createIcons(), 100);
+        }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu) {
+                mobileMenu.classList.toggle('hidden');
+            }
+        }
+
+        // Handle URL hash on load
+        window.addEventListener('load', () => {
+            const hash = window.location.hash.replace('#/', '') || 'home';
+            navigateTo(hash);
+        });
+
+        // Render posts for different sections
+        function renderPosts() {
+            // Home page - All content
+            const homeAllContent = document.getElementById('home-all-content');
+            if (homeAllContent) {
+                homeAllContent.innerHTML = posts.slice(0, 4).map(post => `
+                    <div class="glass-card rounded-2xl overflow-hidden border border-slate-700/50 card-hover group">
+                        <div class="relative h-48 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent z-10"></div>
+                            <img src="${post.image}" alt="${post.title}" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                            <span class="absolute top-4 left-4 z-20 px-3 py-1 bg-red-500/20 border border-red-500/30 text-red-400 text-xs font-medium rounded-full">
+                                ${post.category}
+                            </span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-white mb-2 line-clamp-2 group-hover:text-blue-400 transition-colors">${post.title}</h3>
+                            <p class="text-slate-400 text-sm line-clamp-2 mb-4">${post.description}</p>
+                            <div class="flex items-center justify-between text-xs text-slate-500">
+                                <span class="flex items-center gap-1">
+                                    <i data-lucide="eye" class="w-3 h-3"></i> ${post.views.toLocaleString()}
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <i data-lucide="clock" class="w-3 h-3"></i> ${post.date}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Home page - New posts (last 3)
+            const homeNewPosts = document.getElementById('home-new-posts');
+            if (homeNewPosts) {
+                const newPosts = [...posts].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 3);
+                homeNewPosts.innerHTML = newPosts.map(post => `
+                    <div class="glass-card rounded-2xl overflow-hidden border border-slate-700/50 card-hover group">
+                        <div class="relative h-56 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent z-10"></div>
+                            <img src="${post.image}" alt="${post.title}" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                            <span class="absolute top-4 left-4 z-20 px-3 py-1 bg-blue-500/20 border border-blue-500/30 text-blue-400 text-xs font-medium rounded-full">
+                                Latest
+                            </span>
+                        </div>
+                        <div class="p-6 relative z-20 -mt-12">
+                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">${post.title}</h3>
+                            <p class="text-slate-400 text-sm mb-4 line-clamp-2">${post.description}</p>
+                            <div class="flex items-center gap-4 text-xs text-slate-500">
+                                <span class="flex items-center gap-1">
+                                    <i data-lucide="user" class="w-3 h-3"></i> ${post.category}
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <i data-lucide="calendar" class="w-3 h-3"></i> ${post.date}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // All posts page
+            const allPostsGrid = document.getElementById('all-posts-grid');
+            if (allPostsGrid) {
+                allPostsGrid.innerHTML = posts.map(post => `
+                    <div class="glass-card rounded-2xl overflow-hidden border border-slate-700/50 card-hover group">
+                        <div class="relative h-56 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent z-10"></div>
+                            <img src="${post.image}" alt="${post.title}" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                            <span class="absolute top-4 left-4 z-20 px-3 py-1 bg-red-500/20 border border-red-500/30 text-red-400 text-xs font-medium rounded-full">
+                                ${post.category}
+                            </span>
+                            <span class="absolute top-4 right-4 z-20 px-3 py-1 bg-slate-900/80 border border-slate-700 text-slate-300 text-xs font-medium rounded-full">
+                                ${post.date}
+                            </span>
+                        </div>
+                        <div class="p-6 relative z-20">
+                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors line-clamp-2">${post.title}</h3>
+                            <p class="text-slate-400 text-sm mb-4 line-clamp-2">${post.description}</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-slate-500 flex items-center gap-1">
+                                    <i data-lucide="eye" class="w-4 h-4"></i> ${post.views.toLocaleString()} views
+                                </span>
+                                <button class="text-sm text-red-400 hover:text-red-300 font-medium flex items-center gap-1 transition-colors">
+                                    Read More <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // New posts page
+            const newPostsFullGrid = document.getElementById('new-posts-full-grid');
+            if (newPostsFullGrid) {
+                newPostsFullGrid.innerHTML = [...posts].sort((a, b) => new Date(b.date) - new Date(a.date)).map(post => `
+                    <div class="glass-card rounded-2xl overflow-hidden border border-slate-700/50 card-hover flex flex-col md:flex-row">
+                        <div class="md:w-2/5 relative h-64 md:h-auto overflow-hidden">
+                            <img src="${post.image}" alt="${post.title}" class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500">
+                            <span class="absolute top-4 left-4 z-10 px-3 py-1 bg-red-500/20 border border-red-500/30 text-red-400 text-xs font-medium rounded-full">
+                                ${post.category}
+                            </span>
+                        </div>
+                        <div class="md:w-3/5 p-8 flex flex-col justify-center">
+                            <div class="flex items-center gap-4 mb-4 text-sm text-slate-500">
+                                <span class="flex items-center gap-1"><i data-lucide="calendar" class="w-4 h-4"></i> ${post.date}</span>
+                                <span class="flex items-center gap-1"><i data-lucide="eye" class="w-4 h-4"></i> ${post.views.toLocaleString()} views</span>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-3 hover:text-blue-400 transition-colors cursor-pointer">${post.title}</h3>
+                            <p class="text-slate-400 mb-6 leading-relaxed">${post.description}</p>
+                            <button class="inline-flex items-center gap-2 text-red-400 hover:text-red-300 font-medium transition-colors w-fit">
+                                Read Article <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Admin posts list
+            const adminPostsList = document.getElementById('admin-posts-list');
+            if (adminPostsList) {
+                adminPostsList.innerHTML = posts.map(post => `
+                    <div class="glass-card rounded-2xl overflow-hidden border border-slate-700/50">
+                        <div class="h-40 overflow-hidden relative">
+                            <img src="${post.image}" alt="${post.title}" class="w-full h-full object-cover">
+                            <span class="absolute top-2 left-2 px-2 py-1 bg-slate-900/80 text-white text-xs rounded border border-slate-700">
+                                ${post.category}
+                            </span>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-white mb-1 line-clamp-1">${post.title}</h3>
+                            <p class="text-slate-400 text-xs mb-3 line-clamp-2">${post.description}</p>
+                            <div class="flex items-center justify-between text-xs text-slate-500">
+                                <span>${post.views.toLocaleString()} views</span>
+                                <button onclick="deletePost(${post.id})" class="text-red-400 hover:text-red-300 flex items-center gap-1">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            lucide.createIcons();
+        }
+
+        // Admin functionality
+        function handleAddPost(e) {
+            e.preventDefault();
+            const title = document.getElementById('post-title').value;
+            const image = document.getElementById('post-image').value;
+            const desc = document.getElementById('post-desc').value;
+            const category = document.getElementById('post-category').value;
+            const views = parseInt(document.getElementById('post-views').value) || 0;
+            
+            const newPost = {
+                id: Date.now(),
+                title: title,
+                image: image,
+                description: desc,
+                category: category,
+                views: views,
+                date: new Date().toISOString().split('T')[0]
+            };
+            
+            posts.unshift(newPost);
+            renderPosts();
+            e.target.reset();
+            
+            // Show success notification
+            alert('Post published successfully!');
+        }
+
+        function deletePost(id) {
+            if (confirm('Are you sure you want to delete this post?')) {
+                posts = posts.filter(p => p.id !== id);
+                renderPosts();
+            }
+        }
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            e.target.reset();
+        }
+
+        // Initialize
+        renderPosts();
+
+        // Smooth scroll behavior for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = this.getAttribute('href').replace('#', '');
+                navigateTo(target);
+            });
+        });
+    </script>
+</body>
+      </html>
